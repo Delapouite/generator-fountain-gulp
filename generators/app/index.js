@@ -1,6 +1,11 @@
 const fountain = require('fountain-generator');
 const conf = require('./conf');
 
+function useBabel(props) {
+  return props.js === 'babel' ||
+    props.js === 'js' && props.framework === 'react';
+}
+
 module.exports = fountain.Base.extend({
   prompting() {
     this.fountainPrompting();
@@ -59,7 +64,7 @@ module.exports = fountain.Base.extend({
         });
       }
 
-      if (this.props.js === 'babel' || this.props.js === 'js' && this.props.framework === 'react') {
+      if (useBabel(this.props)) {
         Object.assign(pkg.devDependencies, {
           'babel-core': '^6.2.0'
         });
@@ -83,7 +88,9 @@ module.exports = fountain.Base.extend({
     },
 
     babel() {
-      this.mergeJson('.babelrc', {presets: ['es2015']});
+      if (this.props.js === 'babel') {
+        this.mergeJson('.babelrc', {presets: ['es2015']});
+      }
     }
   },
 
