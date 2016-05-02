@@ -51,9 +51,9 @@ function watch(done) {
   ], gulp.series('styles'));
 <% } -%>
 <% if (modules === 'inject') { -%>
-  gulp.watch(path.join(conf.paths.src, '/app/**/*.<%- extensions.js %>'), gulp.series('inject'));
+  gulp.watch(path.join(conf.paths.src, '/app/**/*.<%- extensions.js %>'), gulp.series('inject', browserSync.reload));
 <% } else if (modules === 'systemjs') { -%>
-  gulp.watch(path.join(conf.paths.src, '/app/**/*.<%- extensions.js %>'), gulp.series('scripts'));
+  gulp.watch(path.join(conf.paths.src, '/app/**/*.<%- extensions.js %>'), gulp.series('scripts', browserSync.reload));
 <% } -%>
   done();
 }
